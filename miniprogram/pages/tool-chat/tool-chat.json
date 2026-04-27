@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar",
+    "chat-bubble": "/components/chat-bubble/chat-bubble"
+  },
+  "navigationStyle": "custom"
+}

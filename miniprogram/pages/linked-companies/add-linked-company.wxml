@@ -1,0 +1,79 @@
+<navigation-bar title="新建企业档案" back="{{true}}" color="black" background="#ffffff" />
+
+<view class="add-company-page">
+  <scroll-view class="add-scroll" scroll-y>
+    <view class="form-intro">
+      <text class="form-intro__title">记录服务主体</text>
+      <text class="form-intro__desc">先建立企业档案，后续报告、订单和咨询内容可以按主体归档。</text>
+    </view>
+
+    <view class="form-card">
+      <view class="field">
+        <view class="field-label"><text class="required">*</text>联系人称呼</view>
+        <input
+          class="field-input"
+          value="{{contactName}}"
+          placeholder="例如：王会计"
+          placeholder-class="field-placeholder"
+          maxlength="20"
+          bindinput="onContactInput"
+        />
+      </view>
+
+      <view class="field">
+        <view class="field-label"><text class="required">*</text>企业主体</view>
+        <view class="query-row">
+          <input
+            class="field-input query-input"
+            value="{{companyKeyword}}"
+            placeholder="输入企业名称或统一社会信用代码"
+            placeholder-class="field-placeholder"
+            maxlength="60"
+            bindinput="onCompanyInput"
+          />
+          <view class="query-btn" bindtap="onQueryCompany">识别</view>
+        </view>
+      </view>
+
+      <view class="field">
+        <view class="field-label">档案预览</view>
+        <view wx:if="{{hasQueriedCompany}}" class="company-info company-info--ready">
+          <text class="company-info__name">{{queriedCompanyName}}</text>
+          <text class="company-info__desc">将作为一条企业档案保存，可在个人中心管理。</text>
+        </view>
+        <view wx:else class="company-info">
+          <text>输入企业主体并点击识别后，这里会生成档案预览。</text>
+        </view>
+      </view>
+
+      <view class="field">
+        <view class="field-label"><text class="required">*</text>我与企业的关系</view>
+        <view
+          wx:for="{{identityOptions}}"
+          wx:key="value"
+          class="identity-option {{identity === item.value ? 'identity-option--active' : ''}}"
+          data-value="{{item.value}}"
+          data-label="{{item.label}}"
+          bindtap="onIdentityTap"
+        >
+          <view class="identity-radio"></view>
+          <text>{{item.label}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="primary-card" bindtap="onPrimaryToggle">
+      <view>
+        <text class="primary-title">默认服务主体</text>
+        <text class="primary-desc">开启后，创建报告时优先使用该企业档案</text>
+      </view>
+      <view class="primary-check {{isPrimary ? 'primary-check--active' : ''}}">✓</view>
+    </view>
+  </scroll-view>
+
+  <view class="confirm-bar">
+    <view class="confirm-btn {{canSubmit && !saving ? 'confirm-btn--active' : ''}}" bindtap="onSubmit">
+      {{saving ? '保存中...' : '保存档案'}}
+    </view>
+  </view>
+</view>

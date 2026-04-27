@@ -1,0 +1,17 @@
+<view class="bubble-wrap {{isUser ? 'bubble-wrap--user' : 'bubble-wrap--bot'}}">
+  <view wx:if="{{!isUser && !hideAvatar}}" class="avatar avatar--bot">
+    <image class="avatar__img" src="{{avatarSrc || defaultAvatarSrc}}" mode="aspectFill" />
+  </view>
+
+  <view class="bubble {{isUser ? 'bubble--user' : 'bubble--bot'}} {{hideAvatar ? 'bubble--compact' : ''}}">
+    <view wx:if="{{loading}}" class="loading-dots">
+      <view class="dot dot--1"></view>
+      <view class="dot dot--2"></view>
+      <view class="dot dot--3"></view>
+    </view>
+
+    <text wx:elif="{{isUser}}" class="bubble__text" user-select>{{content}}</text>
+
+    <rich-text wx:else nodes="{{renderedNodes}}" class="bubble__rich" />
+  </view>
+</view>

@@ -1,0 +1,54 @@
+<navigation-bar title="企业档案" back="{{true}}" color="black" background="#ffffff" />
+
+<view class="linked-page">
+  <scroll-view class="linked-scroll" scroll-y>
+    <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+
+    <view wx:elif="{{companies.length === 0}}" class="empty-state">
+      <view class="empty-graphic">
+        <view class="empty-graphic__mark">
+          <image class="empty-graphic__icon" src="/assets/icons/company-file.svg" mode="aspectFit" />
+        </view>
+      </view>
+      <text class="empty-title">还没有企业档案</text>
+      <text class="empty-desc">把常用服务主体放在这里，后续报告、订单和咨询记录会更好归档</text>
+    </view>
+
+    <view wx:else class="company-list">
+      <view
+        wx:for="{{companies}}"
+        wx:key="id"
+        class="company-card"
+      >
+        <view class="company-card__top">
+          <view class="company-logo">
+            <image class="company-logo__icon" src="/assets/icons/company-file.svg" mode="aspectFit" />
+          </view>
+          <view class="company-copy">
+            <text class="company-name">{{item.companyKeyword}}</text>
+            <text class="company-meta">服务身份：{{item.identityLabel}}</text>
+          </view>
+          <text wx:if="{{item.isPrimary}}" class="primary-tag">默认主体</text>
+        </view>
+        <view class="company-footer">
+          <view class="company-footer__info">
+            <text class="company-contact">联系人称呼：{{item.contactName}}</text>
+            <text class="company-date">建档时间：{{item.createdText}}</text>
+          </view>
+          <view
+            class="delete-btn {{deletingId === item.id ? 'delete-btn--disabled' : ''}}"
+            data-id="{{item.id}}"
+            data-name="{{item.companyKeyword}}"
+            bindtap="onDeleteCompanyTap"
+          >
+            {{deletingId === item.id ? '删除中...' : '删除'}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="bottom-bar">
+    <view class="add-btn" bindtap="onAddTap">新建企业档案</view>
+  </view>
+</view>

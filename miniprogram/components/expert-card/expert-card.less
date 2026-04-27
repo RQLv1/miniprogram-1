@@ -1,0 +1,115 @@
+.expert-card {
+  background: #ffffff;
+  border: 1rpx solid var(--color-border-light);
+  border-radius: 16rpx;
+  padding: 24rpx 26rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.expert-card__top {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.expert-card__avatar {
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 50%;
+  border: 2rpx solid rgba(31, 75, 153, 0.12);
+  background: rgba(31, 75, 153, 0.08);
+  flex-shrink: 0;
+
+  &--fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    font-size: 36rpx;
+    font-weight: 800;
+  }
+}
+
+.expert-card__info {
+  flex: 1;
+}
+
+.expert-card__name-row {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  margin-bottom: 6rpx;
+}
+
+.expert-card__name {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.expert-card__badge {
+  padding: 2rpx 10rpx;
+  border-radius: 12rpx;
+  background: rgba(183, 121, 31, 0.14);
+  color: var(--color-warning);
+  font-size: 20rpx;
+  font-weight: 700;
+}
+
+.expert-card__title {
+  font-size: 24rpx;
+  color: var(--color-text-muted);
+}
+
+.expert-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.expert-card__tag {
+  padding: 8rpx 14rpx;
+  border-radius: 12rpx;
+  background: #f8fafc;
+  border: 1rpx solid var(--color-border-light);
+  color: var(--color-text-secondary);
+  font-size: 22rpx;
+}
+
+.expert-card__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.expert-card__stats {
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+}
+
+.expert-card__rating {
+  color: var(--color-warning);
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
+.expert-card__count {
+  color: var(--color-text-muted);
+  font-size: 22rpx;
+}
+
+.expert-card__btn {
+  height: 60rpx;
+  padding: 0 28rpx;
+  border-radius: 14rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-warning);
+  color: #ffffff;
+  font-size: 24rpx;
+  font-weight: 700;
+}

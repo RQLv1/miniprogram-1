@@ -1,0 +1,57 @@
+{
+  "entryPagePath": "pages/login/login",
+  "pages": [
+    "pages/index/index",
+    "pages/login/login",
+    "pages/chat/chat",
+    "pages/tools/tools",
+    "pages/company/company",
+    "pages/profile/profile",
+    "pages/logs/logs"
+  ],
+  "subpackages": [
+    { "root": "pages/tool-chat", "pages": ["tool-chat"] },
+    { "root": "pages/webview", "pages": ["webview"] },
+    { "root": "pages/experts", "pages": ["experts"] },
+    { "root": "pages/expert-detail", "pages": ["expert-detail"] },
+    { "root": "pages/expert-chat", "pages": ["expert-chat"] },
+    { "root": "pages/membership", "pages": ["membership"] },
+    { "root": "pages/orders", "pages": ["orders"] },
+    { "root": "pages/purchased", "pages": ["purchased"] },
+    { "root": "pages/privacy", "pages": ["privacy"] },
+    { "root": "pages/terms", "pages": ["terms"] },
+    { "root": "pages/report-detail", "pages": ["report-detail"] },
+    { "root": "pages/download-pdf", "pages": ["download-pdf"] },
+    { "root": "pages/linked-companies", "pages": ["linked-companies", "add-linked-company"] }
+  ],
+  "tabBar": {
+    "custom": true,
+    "color": "#667085",
+    "selectedColor": "#1f4b99",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/chat/chat", "text": "搜索问答" },
+      { "pagePath": "pages/tools/tools", "text": "工具库" },
+      { "pagePath": "pages/company/company", "text": "公司主体" },
+      { "pagePath": "pages/profile/profile", "text": "个人中心" }
+    ]
+  },
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "style": "v2",
+  "rendererOptions": {
+    "skyline": {
+      "defaultDisplayBlock": true,
+      "disableABTest": true,
+      "sdkVersionBegin": "3.0.0",
+      "sdkVersionEnd": "15.255.255"
+    }
+  },
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "requireBaseLibVersion": "3.7.1"
+}

@@ -1,0 +1,44 @@
+<navigation-bar title="下载PDF" back="{{true}}" color="black" background="#ffffff" />
+
+<view class="download-page">
+  <view class="search-bar">
+    <view class="search-icon">搜</view>
+    <input
+      class="search-input"
+      type="text"
+      placeholder="搜索报告名称"
+      placeholder-class="search-placeholder"
+      value="{{keyword}}"
+      bindinput="onKeywordChange"
+    />
+  </view>
+
+  <scroll-view class="download-scroll" scroll-y>
+    <view class="download-content">
+      <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+
+      <view wx:elif="{{filteredReports.length === 0}}" class="proto-empty">
+        <view class="proto-empty__icon">PDF</view>
+        <text class="proto-empty__title">暂无报告</text>
+        <text class="proto-empty__desc">完成工具分析后可在这里导出 PDF</text>
+      </view>
+
+      <text wx:else class="proto-section-label">已生成报告</text>
+
+      <view
+        wx:for="{{filteredReports}}"
+        wx:key="id"
+        class="file-row proto-card {{item.focused ? 'file-row--focused' : ''}}"
+      >
+        <view class="file-icon">PDF</view>
+        <view class="file-copy" bindtap="onReportTap" data-id="{{item.id}}">
+          <text class="file-name">{{item.title}}</text>
+          <text class="file-meta">{{item.createdText}}</text>
+        </view>
+        <view class="download-btn {{item.isGenerating ? 'download-btn--disabled' : 'download-btn--active'}}" bindtap="onDownload" data-id="{{item.id}}">
+          {{item.isGenerating ? '生' : (item.hasPdf ? '下' : '导')}}
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

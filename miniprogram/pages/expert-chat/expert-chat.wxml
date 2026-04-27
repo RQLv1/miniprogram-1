@@ -1,0 +1,95 @@
+<navigation-bar title="{{expert ? expert.name : '专家咨询'}}" back="{{true}}" color="black" background="#ffffff" />
+
+<view class="expert-chat-page">
+  <view class="chat-actions">
+    <view class="chat-action-btn" bindtap="onHistoryTap">
+      <image class="chat-action-icon" src="/assets/icons/history.svg" mode="aspectFit" />
+      <text class="chat-action-label">历史记录</text>
+    </view>
+    <view class="chat-action-divider"></view>
+    <view class="chat-action-btn" bindtap="onNewChat">
+      <image class="chat-action-icon" src="/assets/icons/new-chat.svg" mode="aspectFit" />
+      <text class="chat-action-label">新对话</text>
+    </view>
+  </view>
+
+  <scroll-view class="chat-area" scroll-y scroll-into-view="{{scrollAnchor}}">
+    <view wx:if="{{expert && messages.length === 0}}" class="welcome-center">
+      <image
+        wx:if="{{!avatarLoadFailed && avatarSrc}}"
+        class="avatar-large"
+        src="{{avatarSrc}}"
+        mode="aspectFill"
+        binderror="onAvatarError"
+      />
+      <view wx:else class="avatar-large avatar-large--fallback">{{avatarLabel}}</view>
+      <view class="welcome-card">
+        {{expert.greeting}}
+      </view>
+    </view>
+
+    <view class="messages">
+      <chat-bubble
+        wx:for="{{messages}}"
+        wx:key="timestamp"
+        role="{{item.role}}"
+        content="{{item.content}}"
+        loading="{{item.loading}}"
+        hideAvatar="{{true}}"
+      />
+    </view>
+    <view id="expert-bottom" class="scroll-anchor"></view>
+  </scroll-view>
+
+  <view class="input-area">
+    <view class="input-row">
+      <input
+        class="input-box"
+        type="text"
+        placeholder="请输入你的财税问题"
+        placeholder-class="input-placeholder"
+        value="{{inputText}}"
+        bindinput="onInputChange"
+        bindconfirm="onSend"
+        disabled="{{isStreaming}}"
+        confirm-type="send"
+      />
+      <view class="send-btn {{isStreaming ? 'send-btn--disabled' : ''}}" bindtap="onSend">
+        <image class="send-icon" src="/assets/icons/send-arrow.svg" mode="aspectFit" />
+      </view>
+    </view>
+    <view class="toolbar-row">
+      <view class="toolbar-spacer"></view>
+      <view class="tool-icon">+</view>
+    </view>
+  </view>
+
+  <view class="disclaimer">内容由AI生成，仅供参考</view>
+</view>
+
+<view wx:if="{{showHistory}}" class="history-mask" bindtap="onHistoryClose"></view>
+<view class="history-drawer {{showHistory ? 'history-drawer--open' : ''}}" style="padding-top: {{overlayTopPadding}}px;">
+  <view class="history-header">
+    <text class="history-title">专家咨询历史</text>
+    <view class="history-head-actions">
+      <view class="history-reset" bindtap="onNewChat">新对话</view>
+      <view class="history-close" bindtap="onHistoryClose">×</view>
+    </view>
+  </view>
+  <scroll-view class="history-list" scroll-y>
+    <view
+      wx:for="{{historySessions}}"
+      wx:key="_id"
+      class="history-item"
+      data-idx="{{index}}"
+      bindtap="onHistorySelect"
+    >
+      <text class="history-item__title">{{item.title}}</text>
+      <text class="history-item__expert">{{item.expertName}}</text>
+      <text class="history-item__time">{{item.updatedText}}</text>
+    </view>
+    <view wx:if="{{historySessions.length === 0}}" class="history-empty">
+      暂无专家咨询历史
+    </view>
+  </scroll-view>
+</view>

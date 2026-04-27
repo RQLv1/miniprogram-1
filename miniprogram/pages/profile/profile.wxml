@@ -1,0 +1,129 @@
+<navigation-bar title="智税工作台" back="{{false}}" color="black" background="#ffffff" />
+
+<scroll-view class="profile-page" scroll-y>
+  <view class="profile-hero">
+    <view wx:if="{{!isLoggedIn}}" class="profile-user" bindtap="onLoginTap">
+      <view class="avatar avatar--default">
+        <image class="avatar-icon" src="/assets/icons/profile-user.svg" mode="aspectFit" />
+      </view>
+      <view class="user-copy">
+        <text class="user-name">点击登录</text>
+        <text class="user-hint">登录后享受完整功能</text>
+      </view>
+    </view>
+
+    <view wx:else class="profile-user">
+      <image
+        wx:if="{{avatarUrl}}"
+        src="{{avatarUrl}}"
+        class="avatar avatar--image"
+        mode="aspectFill"
+      />
+      <view wx:else class="avatar">
+        <image class="avatar-icon" src="/assets/icons/profile-user.svg" mode="aspectFit" />
+      </view>
+      <view class="user-copy">
+        <text class="user-name">{{displayName}}</text>
+        <text class="user-hint">{{memberLevelLabel}}</text>
+      </view>
+      <view class="edit-btn" bindtap="onEditTap">编辑</view>
+    </view>
+
+  <!-- 编辑头像/昵称弹层 -->
+  <view wx:if="{{isEditing}}" class="edit-overlay" catchtap="onEditCancel">
+    <view class="edit-sheet" catchtap="">
+      <text class="edit-sheet__title">编辑资料</text>
+
+      <view class="avatar-pick-row">
+        <button class="avatar-pick-btn" open-type="chooseAvatar" bindchooseavatar="onEditChooseAvatar">
+          <image wx:if="{{editAvatarPath}}" src="{{editAvatarPath}}" class="avatar-preview" mode="aspectFill" />
+          <view wx:else class="avatar-placeholder">
+            <text class="avatar-placeholder-icon">+</text>
+            <text class="avatar-placeholder-text">换头像</text>
+          </view>
+        </button>
+      </view>
+
+      <input
+        class="edit-nickname-input"
+        type="nickname"
+        placeholder="请输入昵称"
+        value="{{editNickname}}"
+        bindinput="onEditNicknameInput"
+        maxlength="20"
+      />
+
+      <view class="edit-actions">
+        <view class="edit-cancel-btn" bindtap="onEditCancel">取消</view>
+        <button
+          class="edit-save-btn"
+          bindtap="onEditSave"
+          loading="{{editLoading}}"
+          disabled="{{editLoading}}"
+        >保存</button>
+      </view>
+    </view>
+  </view>
+
+    <view class="vip-card" bindtap="onVipTap">
+      <view class="vip-deco vip-deco--top"></view>
+      <view class="vip-deco vip-deco--bottom"></view>
+      <view class="vip-status">{{memberStatusText}}</view>
+      <view class="vip-header">
+        <view class="vip-mark">
+          <image class="vip-mark-img" src="/assets/icons/vip-crown.svg" mode="aspectFit" />
+        </view>
+        <text class="vip-title">智税宝顾问权益</text>
+      </view>
+      <text class="vip-desc">VIP 低至 ¥20 起，解锁税负检测、风险检测、节税方案、政策查询四大完整报告功能</text>
+      <view class="vip-btn">{{vipButtonText}}</view>
+    </view>
+  </view>
+
+  <view class="linked-card">
+    <view class="linked-card__head">
+      <view>
+        <text class="linked-card__eyebrow">服务主体</text>
+        <text class="linked-card__title">企业档案</text>
+      </view>
+      <view class="linked-more" bindtap="onViewLinkedCompanies">
+        <text>管理</text>
+        <text class="linked-more__arrow">›</text>
+      </view>
+    </view>
+    <view class="linked-card__body">
+      <view class="linked-icon">
+        <image class="linked-icon-img" src="/assets/icons/company-file.svg" mode="aspectFit" />
+      </view>
+      <view class="linked-copy">
+        <text wx:if="{{hasLinkedCompanies}}" class="linked-title">{{primaryCompanyName}}</text>
+        <text wx:else class="linked-title">还没有企业档案</text>
+        <text class="linked-desc">{{linkedCompanyDesc}}</text>
+      </view>
+      <view wx:if="{{hasLinkedCompanies}}" class="linked-action" bindtap="onViewLinkedCompanies">打开</view>
+      <view wx:else class="linked-action" bindtap="onAddLinkedCompany">新建</view>
+    </view>
+    <view class="linked-card__foot">
+      <text>主企业会优先用于报告抬头和服务记录</text>
+    </view>
+  </view>
+
+  <view class="content service-section">
+    <text class="proto-section-label">服务与支持</text>
+    <view class="menu-card proto-card">
+      <view
+        wx:for="{{menuItems}}"
+        wx:key="text"
+        class="menu-item"
+        data-url="{{item.url}}"
+        bindtap="onMenuTap"
+      >
+        <view class="menu-icon">
+          <image class="menu-icon-img" src="{{item.icon}}" mode="aspectFit" />
+        </view>
+        <text class="menu-text">{{item.text}}</text>
+        <text class="proto-arrow">›</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>

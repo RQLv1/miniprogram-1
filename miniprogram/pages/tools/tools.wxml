@@ -1,0 +1,49 @@
+<navigation-bar title="智税工作台" back="{{false}}" color="black" background="#ffffff" />
+
+<scroll-view class="tools-page" scroll-y>
+  <view class="proto-page-padding tools-content">
+    <text class="proto-section-label">常用工具</text>
+    <view class="tool-list proto-card">
+      <view
+        wx:for="{{featuredTools}}"
+        wx:key="name"
+        class="tool-item {{item.disabled ? 'tool-item--disabled' : ''}}"
+        data-url="{{item.url}}"
+        data-name="{{item.name}}"
+        data-disabled="{{item.disabled}}"
+        bindtap="onToolTap"
+      >
+        <view class="tool-icon">
+          <image class="tool-icon-img" src="{{item.icon}}" mode="aspectFit" />
+        </view>
+        <view class="tool-copy">
+          <text class="tool-name">{{item.name}}</text>
+          <text wx:if="{{item.desc}}" class="tool-desc">{{item.desc}}</text>
+        </view>
+        <text class="proto-arrow">›</text>
+      </view>
+    </view>
+
+    <text class="proto-section-label section-gap">更多服务</text>
+    <view class="tool-list proto-card">
+      <view
+        wx:for="{{serviceTools}}"
+        wx:key="name"
+        class="tool-item {{item.disabled ? 'tool-item--disabled' : ''}}"
+        data-url="{{item.url}}"
+        data-name="{{item.name}}"
+        data-disabled="{{item.disabled}}"
+        bindtap="onToolTap"
+      >
+        <view class="tool-icon">
+          <image class="tool-icon-img" src="{{item.icon}}" mode="aspectFit" />
+        </view>
+        <view class="tool-copy">
+          <text class="tool-name">{{item.name}}</text>
+          <text wx:if="{{item.desc}}" class="tool-desc">{{item.desc}}</text>
+        </view>
+        <text wx:if="{{!item.disabled}}" class="proto-arrow">›</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>

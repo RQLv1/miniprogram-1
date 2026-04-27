@@ -1,0 +1,167 @@
+page {
+  background: var(--color-bg);
+  min-height: 100vh;
+}
+
+.orders-page {
+  min-height: 100vh;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 10rpx;
+  padding: 0 24rpx 16rpx;
+  background: #ffffff;
+}
+
+.filter-tab {
+  flex: 1;
+  height: 58rpx;
+  border-radius: 14rpx;
+  border: 1rpx solid var(--color-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  font-size: 22rpx;
+
+  &--active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #ffffff;
+    font-weight: 700;
+  }
+}
+
+.orders-content {
+  padding: 0 24rpx 32rpx;
+}
+
+.loading-tip {
+  padding: 80rpx 0;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 26rpx;
+}
+
+.order-card {
+  padding: 22rpx;
+  margin-bottom: 16rpx;
+}
+
+.order-top,
+.order-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.order-top {
+  margin-bottom: 16rpx;
+}
+
+.order-no {
+  font-size: 20rpx;
+  color: var(--color-text-muted);
+}
+
+.order-status {
+  padding: 4rpx 12rpx;
+  border-radius: 18rpx;
+  font-size: 20rpx;
+  font-weight: 700;
+
+  &.status--pending {
+    background: rgba(183, 121, 31, 0.14);
+    color: var(--color-warning);
+  }
+
+  &.status--progress {
+    background: rgba(31, 75, 153, 0.12);
+    color: var(--color-primary);
+  }
+
+  &.status--done {
+    background: rgba(47, 133, 90, 0.12);
+    color: var(--color-success);
+  }
+}
+
+.order-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.order-icon {
+  width: 78rpx;
+  height: 78rpx;
+  border-radius: 18rpx;
+  border: 2rpx solid var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  font-size: 24rpx;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.order-copy {
+  flex: 1;
+}
+
+.order-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 4rpx;
+}
+
+.order-company,
+.order-date {
+  display: block;
+  font-size: 22rpx;
+  color: var(--color-text-muted);
+  margin-bottom: 4rpx;
+}
+
+.order-price {
+  font-size: 30rpx;
+  font-weight: 800;
+  color: var(--color-warning);
+}
+
+.order-actions {
+  display: flex;
+  gap: 10rpx;
+}
+
+.btn {
+  height: 56rpx;
+  padding: 0 20rpx;
+  border-radius: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+  font-weight: 700;
+
+  &--primary {
+    background: var(--color-primary);
+    color: #ffffff;
+  }
+
+  &--ghost {
+    background: #ffffff;
+    border: 1rpx solid var(--color-border-light);
+    color: var(--color-text-secondary);
+  }
+
+  &--gold {
+    background: var(--color-warning);
+    color: #ffffff;
+  }
+}

@@ -1,0 +1,30 @@
+<navigation-bar title="风险责任条款" back="{{true}}" color="black" background="#ffffff" />
+
+<scroll-view class="policy-page" scroll-y>
+  <view class="policy-content">
+    <view class="policy-hero">
+      <view class="policy-icon">
+        <image class="policy-icon-img" src="/assets/icons/terms.svg" mode="aspectFit" />
+      </view>
+      <text class="policy-title">智税工作台风险责任条款</text>
+      <text class="policy-update">最后更新日期：2026 年 4 月 15 日</text>
+    </view>
+
+    <view class="notice-banner">
+      <text class="notice-text">请在使用本服务前仔细阅读以下条款。使用本服务即视为您已阅读并同意本条款。</text>
+    </view>
+
+    <view wx:for="{{clauses}}" wx:key="num" class="clause-card proto-card">
+      <view class="clause-head">
+        <view class="clause-num">{{item.num}}</view>
+        <text class="clause-head-title">{{item.title}}</text>
+      </view>
+      <text class="clause-body">{{item.body}}</text>
+    </view>
+
+    <view class="policy-footer">
+      <text>智税工作台 © 2026</text>
+      <text>本条款最终解释权归运营方所有</text>
+    </view>
+  </view>
+</scroll-view>

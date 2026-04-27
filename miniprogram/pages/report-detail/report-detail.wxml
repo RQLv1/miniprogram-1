@@ -1,0 +1,47 @@
+<navigation-bar title="报告详情" back="{{true}}" color="black" background="#ffffff" />
+
+<view class="report-page">
+  <view wx:if="{{loading}}" class="proto-empty">
+    <view class="proto-empty__icon">报</view>
+    <text class="proto-empty__title">正在加载报告</text>
+  </view>
+
+  <view wx:elif="{{report}}" class="report-shell">
+    <scroll-view class="report-scroll" scroll-y>
+      <view class="report-header-card">
+        <view class="report-icon">{{reportView.iconLabel}}</view>
+        <view class="report-copy">
+          <text class="report-tool">{{reportView.typeLabel}}</text>
+          <text class="report-title">{{reportView.title}}</text>
+          <text class="report-time">生成于 {{reportView.createdText}}</text>
+        </view>
+        <view class="report-badge">已生成</view>
+      </view>
+
+      <view class="report-content">
+        <view class="question-block">
+          <text class="question-label">原始问题</text>
+          <text class="question-text">{{reportView.questionText}}</text>
+        </view>
+
+        <view class="answer-block proto-card">
+          <view class="answer-label">
+            <view class="answer-label__icon">{{reportView.iconLabel}}</view>
+            <text>AI 分析结果</text>
+          </view>
+          <rich-text class="answer-content" nodes="{{reportHtml}}" />
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="action-bar">
+      <button class="action-btn action-btn--ghost" open-type="share">分享</button>
+      <view class="action-btn action-btn--primary" bindtap="onDownloadPdf">导出 PDF</view>
+    </view>
+  </view>
+
+  <view wx:else class="proto-empty">
+    <view class="proto-empty__icon">无</view>
+    <text class="proto-empty__title">报告不存在或已删除</text>
+  </view>
+</view>

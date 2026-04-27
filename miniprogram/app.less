@@ -1,0 +1,135 @@
+/** app.less **/
+
+page {
+  --color-primary: #1f4b99;
+  --color-primary-hover: #173a78;
+  --color-primary-light: #e8edf7;
+  --color-success: #2f855a;
+  --color-success-light: #e6f4ee;
+  --color-warning: #b7791f;
+  --color-warning-light: #fef3c7;
+  --color-danger: #c0392b;
+  --color-danger-light: #fbe7e5;
+  --color-text: #1f2937;
+  --color-text-secondary: #667085;
+  --color-text-muted: #9ca3af;
+  --color-border: #d0d5dd;
+  --color-border-light: #e5e7eb;
+  --color-bg: #f5f7fa;
+  --color-panel: #ffffff;
+  --color-input: #f8fafc;
+  --radius-card: 16rpx;
+  --radius-input: 12rpx;
+  --radius-btn: 12rpx;
+  --radius-pill: 999rpx;
+  --shadow-card: 0 8rpx 28rpx rgba(15, 23, 42, 0.06);
+  --shadow-btn: 0 8rpx 24rpx rgba(31, 75, 153, 0.16);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 28rpx;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+view,
+text,
+input,
+textarea,
+button,
+scroll-view {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  line-height: 1;
+  background: transparent;
+}
+
+button::after {
+  border: none;
+}
+
+.proto-shell {
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+.proto-page-padding {
+  padding: 0 24rpx 32rpx;
+}
+
+.proto-card {
+  background: var(--color-panel);
+  border: 1rpx solid var(--color-border-light);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.proto-section-label {
+  display: block;
+  padding: 10rpx 8rpx 16rpx;
+  color: var(--color-text-muted);
+  font-size: 22rpx;
+  font-weight: 600;
+  letter-spacing: 4rpx;
+}
+
+.proto-arrow {
+  color: var(--color-text-muted);
+  font-size: 34rpx;
+  line-height: 1;
+}
+
+.proto-icon-tile {
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 18rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+  color: var(--color-panel);
+  flex-shrink: 0;
+}
+
+.proto-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14rpx;
+  padding: 120rpx 40rpx;
+  text-align: center;
+}
+
+.proto-empty__icon {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.proto-empty__title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.proto-empty__desc {
+  font-size: 24rpx;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}

@@ -1,0 +1,16 @@
+<navigation-bar title="财税专家" back="{{true}}" color="black" background="#ffffff" />
+
+<scroll-view class="experts-page" scroll-y>
+  <view class="proto-page-padding">
+    <view class="expert-tip">
+      <view class="expert-tip__icon">
+        <image class="expert-tip__icon-img" src="/assets/icons/expert.svg" mode="aspectFit" />
+      </view>
+      <text class="expert-tip__text">选择擅长领域的财税专家，获取一对一专业咨询服务。</text>
+    </view>
+
+    <view class="expert-list">
+      <expert-card wx:for="{{experts}}" wx:key="id" expert="{{item}}" />
+    </view>
+  </view>
+</scroll-view>

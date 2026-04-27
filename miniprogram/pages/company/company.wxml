@@ -1,0 +1,38 @@
+<navigation-bar title="智税工作台" back="{{false}}" color="black" background="#ffffff" />
+
+<scroll-view class="company-page" scroll-y>
+  <view class="proto-page-padding company-content">
+    <view class="search-bar">
+      <image class="search-icon" src="/assets/icons/search.svg" mode="aspectFit" />
+      <input
+        class="search-input"
+        type="text"
+        placeholder="搜索企业名称、统一社会信用代码"
+        placeholder-class="search-placeholder"
+        value="{{keyword}}"
+        bindinput="onKeywordChange"
+      />
+    </view>
+
+    <text class="proto-section-label">企业查询工具</text>
+
+    <view class="tool-list proto-card">
+      <view
+        wx:for="{{tools}}"
+        wx:key="name"
+        class="tool-item"
+        data-url="{{item.url}}"
+        bindtap="onToolTap"
+      >
+        <view class="tool-icon">
+          <image class="tool-icon-img" src="{{item.icon}}" mode="aspectFit" />
+        </view>
+        <view class="tool-copy">
+          <text class="tool-name">{{item.name}}</text>
+          <text class="tool-desc">{{item.desc}}</text>
+        </view>
+        <text class="proto-arrow">›</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>

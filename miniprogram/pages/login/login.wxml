@@ -1,0 +1,71 @@
+<view class="login-page">
+  <image class="login-bg" src="{{loginBg}}" mode="aspectFill" />
+  <view class="login-scrim"></view>
+
+  <view class="login-panel">
+    <!-- 老用户：欢迎回来 -->
+    <block wx:if="{{isReturning}}">
+      <text class="step-title">欢迎回来</text>
+      <view class="avatar-pick-row">
+        <image wx:if="{{existingAvatar}}" src="{{existingAvatar}}" class="avatar-preview" mode="aspectFill" />
+        <view wx:else class="avatar-placeholder">
+          <text class="avatar-placeholder-icon">👤</text>
+        </view>
+      </view>
+      <text class="returning-nickname">{{existingNickname}}</text>
+      <view class="login-btn-row">
+        <button class="login-btn" bindtap="onEnterApp">进入应用</button>
+      </view>
+    </block>
+
+    <!-- 新用户：注册流程 -->
+    <block wx:else>
+      <text class="step-title">设置头像与昵称</text>
+      <text class="step-hint">完善信息后即可开始使用</text>
+
+      <view class="avatar-pick-row">
+        <button class="avatar-pick-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+          <image wx:if="{{tempAvatarPath}}" src="{{tempAvatarPath}}" class="avatar-preview" mode="aspectFill" />
+          <view wx:else class="avatar-placeholder">
+            <text class="avatar-placeholder-icon">+</text>
+            <text class="avatar-placeholder-text">选择头像</text>
+          </view>
+        </button>
+      </view>
+
+      <view class="nickname-row">
+        <input
+          class="nickname-input"
+          type="nickname"
+          placeholder="请输入昵称"
+          value="{{nickname}}"
+          bindinput="onNicknameInput"
+          maxlength="20"
+        />
+      </view>
+
+      <view class="login-btn-row">
+        <button
+          class="login-btn"
+          bindtap="onConfirmInfo"
+          loading="{{loading}}"
+          disabled="{{loading || !tempAvatarPath || !nickname}}"
+        >
+          进入应用
+        </button>
+      </view>
+
+      <view class="agreement-row">
+        <view class="agree-box {{agreed ? 'agree-box--checked' : ''}}" bindtap="onAgreementToggle">
+          {{agreed ? '✓' : ''}}
+        </view>
+        <view class="agreement-copy">
+          <text>我已阅读并同意</text>
+          <navigator url="/pages/privacy/privacy" class="agreement-link">《隐私政策》</navigator>
+          <text>及</text>
+          <navigator url="/pages/terms/terms" class="agreement-link">《风险责任条款》</navigator>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

@@ -1,0 +1,45 @@
+<navigation-bar title="已购订单" back="{{true}}" color="black" background="#ffffff" />
+
+<scroll-view class="purchased-page" scroll-y>
+  <view class="stats-banner">
+    <view class="stat-item">
+      <text class="stat-value">{{stats.count}}</text>
+      <text class="stat-label">已购报告</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <text class="stat-value">¥{{stats.amount}}</text>
+      <text class="stat-label">累计消费</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <text class="stat-value">{{stats.types}}</text>
+      <text class="stat-label">服务类型</text>
+    </view>
+  </view>
+
+  <view class="purchased-content">
+    <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+
+    <view wx:elif="{{items.length === 0}}" class="proto-empty">
+      <view class="proto-empty__icon">购</view>
+      <text class="proto-empty__title">暂无已购内容</text>
+      <text class="proto-empty__desc">支付完成后的报告会显示在这里</text>
+    </view>
+
+    <view wx:for="{{items}}" wx:key="id" class="purchased-card proto-card">
+      <view class="card-main" bindtap="onItemTap" data-id="{{item.reportId || item.id}}">
+        <view class="card-icon">{{item.iconLabel}}</view>
+        <view class="card-copy">
+          <text class="card-title">{{item.title}}</text>
+          <text class="card-company">{{item.typeLabel}}</text>
+          <text class="card-meta">{{item.createdText}} · ¥{{item.amountText}}</text>
+        </view>
+      </view>
+      <view class="card-actions">
+        <view class="card-btn card-btn--ghost" bindtap="onItemTap" data-id="{{item.reportId || item.id}}">查看报告</view>
+        <view class="card-btn card-btn--primary" bindtap="onDownload" data-report-id="{{item.reportId || item.id}}">下载PDF</view>
+      </view>
+    </view>
+  </view>
+</scroll-view>

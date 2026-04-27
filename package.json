@@ -1,0 +1,16 @@
+{
+  "name": "miniprogram-ts-less-quickstart",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "cloud:list-images": "tcb storage list images/experts --env-id cloud-accounting-d7e5ld7733202af --json",
+    "cloud:upload-images": "tcb storage upload ./source-assets/cloud-images images --times 3 --interval 1000 --env-id cloud-accounting-d7e5ld7733202af"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "devDependencies": {
+    "miniprogram-api-typings": "^2.8.3-1",
+    "typescript": "^6.0.3"
+  }
+}

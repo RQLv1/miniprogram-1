@@ -1,0 +1,55 @@
+<navigation-bar title="我的订单" back="{{true}}" color="black" background="#ffffff" />
+
+<scroll-view class="orders-page" scroll-y>
+  <view class="filter-tabs">
+    <view
+      wx:for="{{filters}}"
+      wx:key="key"
+      class="filter-tab {{activeFilter === item.key ? 'filter-tab--active' : ''}}"
+      data-key="{{item.key}}"
+      bindtap="onFilterTap"
+    >
+      {{item.label}}
+    </view>
+  </view>
+
+  <view class="orders-content">
+    <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+
+    <view wx:elif="{{filteredOrders.length === 0}}" class="proto-empty">
+      <view class="proto-empty__icon">单</view>
+      <text class="proto-empty__title">暂无订单记录</text>
+      <text class="proto-empty__desc">订单创建后会展示在这里</text>
+    </view>
+
+    <view
+      wx:for="{{filteredOrders}}"
+      wx:key="id"
+      class="order-card proto-card"
+      data-id="{{item.reportId || item.id}}"
+      bindtap="onOrderTap"
+    >
+      <view class="order-top">
+        <text class="order-no">{{item.orderNo}}</text>
+        <text class="order-status {{item.statusClass}}">{{item.statusText}}</text>
+      </view>
+      <view class="order-body">
+        <view class="order-icon">{{item.iconLabel}}</view>
+        <view class="order-copy">
+          <text class="order-title">{{item.title}}</text>
+          <text class="order-company">{{item.typeLabel}}</text>
+          <text class="order-date">{{item.createdText}}</text>
+        </view>
+      </view>
+      <view class="order-footer">
+        <text class="order-price">¥{{item.amountText}}</text>
+        <view class="order-actions">
+          <view wx:if="{{item.secondaryAction}}" class="btn btn--ghost" catchtap="noop">{{item.secondaryAction}}</view>
+          <view class="btn {{item.primaryVariant === 'gold' ? 'btn--gold' : 'btn--primary'}}" catchtap="onOrderAction" data-id="{{item.reportId || item.id}}">
+            {{item.primaryAction}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>

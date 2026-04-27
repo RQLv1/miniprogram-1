@@ -1,0 +1,9 @@
+{
+  "name": "updateUserInfo",
+  "version": "1.0.0",
+  "description": "Updates user nickname and avatar in CloudBase",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

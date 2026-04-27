@@ -1,0 +1,26 @@
+<navigation-bar title="隐私政策" back="{{true}}" color="black" background="#ffffff" />
+
+<scroll-view class="policy-page" scroll-y>
+  <view class="policy-content">
+    <view class="policy-hero">
+      <view class="policy-icon">
+        <image class="policy-icon-img" src="/assets/icons/privacy.svg" mode="aspectFit" />
+      </view>
+      <text class="policy-title">智税工作台隐私政策</text>
+      <text class="policy-update">最近更新：2026 年 4 月 11 日</text>
+    </view>
+
+    <view wx:for="{{clauses}}" wx:key="num" class="clause-card proto-card">
+      <view class="clause-head">
+        <view class="clause-num">{{item.num}}</view>
+        <text class="clause-head-title">{{item.title}}</text>
+      </view>
+      <text class="clause-body">{{item.body}}</text>
+    </view>
+
+    <view class="policy-footer">
+      <text>智税工作台 © 2026</text>
+      <text>如有任何疑问，请通过在线客服联系我们</text>
+    </view>
+  </view>
+</scroll-view>

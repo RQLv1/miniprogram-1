@@ -1,0 +1,65 @@
+<navigation-bar title="专家详情" back="{{true}}" color="black" background="#ffffff" />
+
+<view wx:if="{{expert}}" class="detail-page">
+  <scroll-view class="detail-scroll" scroll-y>
+    <view class="proto-page-padding detail-content">
+      <view class="expert-header">
+        <image
+          wx:if="{{!avatarLoadFailed && avatarSrc}}"
+          class="expert-avatar"
+          src="{{avatarSrc}}"
+          mode="aspectFill"
+          binderror="onAvatarError"
+        />
+        <view wx:else class="expert-avatar expert-avatar--fallback">{{avatarLabel}}</view>
+        <view class="expert-copy">
+          <view class="expert-name-row">
+            <text class="expert-name">{{expert.name}}</text>
+            <view class="expert-badge">{{expert.badge}}</view>
+          </view>
+          <text class="expert-subtitle">{{expert.title}} · {{expert.experience}}</text>
+        </view>
+      </view>
+
+      <view class="info-section proto-card">
+        <view class="info-row">
+          <view class="info-icon">
+            <image class="detail-icon-img" src="/assets/icons/qualification.svg" mode="aspectFit" />
+          </view>
+          <view class="info-body">
+            <text class="info-label">职业资质：</text>
+            <text class="info-value">{{expert.qualifications}}</text>
+          </view>
+        </view>
+        <view class="info-row">
+          <view class="info-icon">
+            <image class="detail-icon-img" src="/assets/icons/specialty.svg" mode="aspectFit" />
+          </view>
+          <view class="info-body">
+            <text class="info-label">擅长领域：</text>
+            <text class="info-value">{{expert.specialtySummary}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="intro-section proto-card">
+        <view class="intro-title">
+          <view class="intro-icon">
+            <image class="detail-icon-img" src="/assets/icons/intro.svg" mode="aspectFit" />
+          </view>
+          <text>专家介绍：</text>
+        </view>
+        <text class="intro-text">{{expert.intro}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="bottom-action">
+    <view class="consult-btn" bindtap="onConsult">立即咨询</view>
+  </view>
+</view>
+
+<view wx:else class="proto-empty">
+  <view class="proto-empty__icon">无</view>
+  <text class="proto-empty__title">专家信息不存在</text>
+</view>

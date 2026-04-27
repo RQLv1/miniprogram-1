@@ -1,0 +1,65 @@
+<navigation-bar title="开通会员" back="{{true}}" color="black" background="#ffffff" />
+
+<view class="membership-page">
+  <scroll-view class="membership-scroll" scroll-y>
+    <view class="page-content">
+      <view class="status-banner">
+        <view class="status-avatar">{{memberLevelMark}}</view>
+        <view class="status-copy">
+          <text class="status-name">{{memberLevelLabel}}</text>
+          <text class="status-tag">当前权益状态</text>
+        </view>
+        <view class="status-side">
+          <text class="status-num">{{selectedPlanPrice}}</text>
+          <text class="status-sub">当前关注方案</text>
+        </view>
+      </view>
+
+      <view class="plans-row">
+        <view
+          wx:for="{{plans}}"
+          wx:key="id"
+          class="plan-card {{selectedPlanId === item.id ? 'plan-card--selected' : ''}} {{item.id === 'free' ? 'plan-card--free' : ''}}"
+          style="border-color: {{selectedPlanId === item.id ? item.color : '#e5e7eb'}}; background: {{item.bgColor}};"
+          data-plan-id="{{item.id}}"
+          bindtap="onPlanSelect"
+        >
+          <view class="plan-badge" style="background: {{item.badgeColor}}; color: {{item.badgeTextColor}};">{{item.badge}}</view>
+          <text class="plan-name">{{item.name}}</text>
+          <view class="plan-price">
+            <text class="plan-currency">{{item.currency}}</text>
+            <text class="plan-amount">{{item.amount}}</text>
+          </view>
+          <text class="plan-period">{{item.period}}</text>
+          <text class="plan-desc">{{item.desc}}</text>
+        </view>
+      </view>
+
+      <view class="compare-card proto-card">
+        <view class="compare-header">
+          <text class="compare-title">权益对比</text>
+        </view>
+        <view class="compare-table compare-table--head">
+          <text class="compare-cell compare-cell--name">权益</text>
+          <text class="compare-cell">免费</text>
+          <text class="compare-cell">VIP</text>
+          <text class="compare-cell">SVIP</text>
+        </view>
+        <view wx:for="{{featuresView}}" wx:key="name" class="compare-table">
+          <text class="compare-cell compare-cell--name">{{item.name}}</text>
+          <text class="compare-cell">{{item.freeText}}</text>
+          <text class="compare-cell compare-cell--vip">{{item.vipText}}</text>
+          <text class="compare-cell compare-cell--svip">{{item.svipText}}</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="pay-bar">
+    <view class="pay-copy">
+      <text class="pay-label">当前选择</text>
+      <text class="pay-plan">{{selectedPlanName}}</text>
+    </view>
+    <view class="pay-btn" bindtap="onSubscribe">{{payButtonText}}</view>
+  </view>
+</view>

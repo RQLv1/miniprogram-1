@@ -1,0 +1,31 @@
+<view class="expert-card" bindtap="onConsult">
+  <view class="expert-card__top">
+    <image
+      wx:if="{{!avatarLoadFailed && expert.avatarUrl}}"
+      class="expert-card__avatar"
+      src="{{expert.avatarUrl}}"
+      mode="aspectFill"
+      binderror="onAvatarError"
+    />
+    <view wx:else class="expert-card__avatar expert-card__avatar--fallback">{{avatarLabel}}</view>
+    <view class="expert-card__info">
+      <view class="expert-card__name-row">
+        <text class="expert-card__name">{{expert.name}}</text>
+        <view class="expert-card__badge">{{expert.badge}}</view>
+      </view>
+      <text class="expert-card__title">{{expert.title}} · {{expert.experience}}</text>
+    </view>
+  </view>
+
+  <view class="expert-card__tags">
+    <text wx:for="{{expert.specialties}}" wx:key="*this" class="expert-card__tag">{{item}}</text>
+  </view>
+
+  <view class="expert-card__bottom">
+    <view class="expert-card__stats">
+      <text class="expert-card__rating">{{expert.rating}}</text>
+      <text class="expert-card__count">{{expert.consultCount}}次咨询</text>
+    </view>
+    <view class="expert-card__btn">立即咨询</view>
+  </view>
+</view>

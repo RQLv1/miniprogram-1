@@ -1,0 +1,212 @@
+<navigation-bar title="{{tool ? tool.navTitle : '工具服务'}}" back="{{true}}" color="black" background="#ffffff" />
+
+<view wx:if="{{isPolicyMode}}" class="policy-page">
+  <view class="search-bar">
+    <view class="search-wrap">
+      <image class="search-icon" src="/assets/icons/search.svg" mode="aspectFit" />
+      <input
+        class="search-input"
+        type="text"
+        placeholder="输入关键词搜索政策法规..."
+        placeholder-class="search-placeholder"
+        value="{{policyKeyword}}"
+        bindinput="onPolicyKeywordChange"
+        bindconfirm="onPolicySearch"
+        confirm-type="search"
+      />
+    </view>
+    <view class="search-btn" bindtap="onPolicySearch">搜索</view>
+  </view>
+
+  <scroll-view class="policy-content" scroll-y>
+    <view wx:if="{{!showPolicyResults}}" class="policy-empty">
+      <image class="policy-empty__icon" src="/assets/icons/policy-search.svg" mode="aspectFit" />
+      <text class="policy-empty__title">输入关键词搜索税务政策法规</text>
+      <text class="policy-empty__desc">支持搜索增值税、企业所得税、个税、优惠政策等相关法规文件</text>
+      <view class="hot-tags">
+        <view
+          wx:for="{{tool.hotTags}}"
+          wx:key="*this"
+          class="hot-tag"
+          data-tag="{{item}}"
+          bindtap="onPolicyHotTagTap"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <view wx:else class="policy-result-wrap">
+      <scroll-view class="cat-filter" scroll-x>
+        <view
+          wx:for="{{policyCategories}}"
+          wx:key="value"
+          class="cat-btn {{selectedCategory === item.value ? 'cat-btn--active' : ''}}"
+          data-value="{{item.value}}"
+          bindtap="onPolicyCategoryTap"
+        >
+          {{item.label}}
+        </view>
+      </scroll-view>
+
+      <text class="result-count">{{policyCountText}}</text>
+
+      <view wx:if="{{filteredPolicies.length === 0}}" class="proto-empty">
+        <view class="proto-empty__icon">空</view>
+        <text class="proto-empty__title">未找到匹配政策</text>
+        <text class="proto-empty__desc">换一个关键词或分类试试看</text>
+      </view>
+
+      <view
+        wx:for="{{filteredPolicies}}"
+        wx:key="id"
+        class="policy-card proto-card"
+        data-id="{{item.id}}"
+        bindtap="onPolicyOpen"
+      >
+        <view class="policy-card__top">
+          <view class="policy-badge">{{item.category}}</view>
+          <text class="policy-tag">{{item.docNo}}</text>
+        </view>
+        <text class="policy-title">{{item.title}}</text>
+        <text class="policy-summary">{{item.summary}}</text>
+        <view class="policy-card__bottom">
+          <text class="policy-date">{{item.date}}</text>
+          <text class="policy-more">查看详情</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view wx:if="{{activePolicy}}" class="detail-backdrop" bindtap="onPolicySheetClose">
+    <view class="detail-sheet" catchtap="noop">
+      <view class="sheet-drag"></view>
+      <text class="sheet-cat">{{activePolicy.category}}</text>
+      <text class="sheet-title">{{activePolicy.title}}</text>
+      <text class="sheet-doc">{{activePolicy.docNo}}</text>
+      <text class="sheet-date">{{activePolicy.date}}</text>
+      <view class="sheet-divider"></view>
+      <text class="sheet-summary">{{activePolicy.summary}}</text>
+    </view>
+  </view>
+</view>
+
+<view wx:else class="tool-page">
+  <scroll-view class="tool-scroll" scroll-y>
+    <view class="tool-content">
+      <view class="form-tip" style="background: {{tool.accentSoft}}; border-color: {{tool.accent}}33;">
+        <view class="form-tip__icon" style="background: {{tool.accentSoft}};">
+          <image class="form-tip__icon-img" src="{{tool.icon}}" mode="aspectFit" />
+        </view>
+        <text class="form-tip__text">{{tool.hint}}</text>
+      </view>
+
+      <view
+        wx:for="{{sections}}"
+        wx:key="id"
+        class="form-group proto-card"
+      >
+        <view class="group-header">
+          <text class="group-title">{{item.title}}</text>
+          <text wx:if="{{item.tag}}" class="group-tag {{item.tag === '必填' ? 'group-tag--required' : 'group-tag--optional'}}">{{item.tag}}</text>
+        </view>
+
+        <view wx:if="{{item.note}}" class="group-note">
+          <text>{{item.note}}</text>
+        </view>
+
+        <view wx:if="{{item.type === 'steps'}}" class="step-list">
+          <view wx:for="{{item.steps}}" wx:key="title" class="step-item">
+            <view class="step-num">{{index + 1}}</view>
+            <view class="step-copy">
+              <text class="step-title">{{item.title}}</text>
+              <text class="step-desc">{{item.desc}}</text>
+            </view>
+          </view>
+        </view>
+
+        <block wx:else>
+          <view wx:for="{{item.fields}}" wx:key="id" class="form-item">
+            <view class="form-label">
+              <text>{{item.label}}</text>
+              <text wx:if="{{item.unit}}" class="form-unit">{{item.unit}}</text>
+            </view>
+
+            <picker
+              wx:if="{{item.type === 'select'}}"
+              mode="selector"
+              range="{{item.options}}"
+              range-key="label"
+              value="{{item.currentIndex || 0}}"
+              data-section-id="{{item.__sectionId}}"
+              data-field-id="{{item.id}}"
+              bindchange="onFieldSelectChange"
+            >
+              <view class="form-select">{{item.value || item.placeholder || '请选择' + item.label}}</view>
+            </picker>
+
+            <input
+              wx:elif="{{item.type === 'number'}}"
+              class="form-input"
+              type="digit"
+              value="{{item.value}}"
+              placeholder="{{item.placeholder}}"
+              placeholder-class="input-placeholder"
+              data-section-id="{{item.__sectionId}}"
+              data-field-id="{{item.id}}"
+              bindinput="onFieldInput"
+            />
+
+            <textarea
+              wx:elif="{{item.type === 'textarea'}}"
+              class="form-textarea"
+              value="{{item.value}}"
+              placeholder="{{item.placeholder}}"
+              placeholder-class="input-placeholder"
+              data-section-id="{{item.__sectionId}}"
+              data-field-id="{{item.id}}"
+              bindinput="onFieldInput"
+              auto-height
+            />
+
+            <view wx:elif="{{item.type === 'tag-multi'}}" class="tag-group">
+              <view
+                wx:for="{{item.options}}"
+                wx:key="value"
+                class="tag-item {{item.active ? 'tag-item--active' : ''}}"
+                data-section-id="{{item.__sectionId}}"
+                data-field-id="{{item.__fieldId}}"
+                data-option-value="{{item.value}}"
+                bindtap="onToggleOption"
+              >
+                {{item.label}}
+              </view>
+            </view>
+
+            <view wx:elif="{{item.type === 'check-multi'}}" class="check-group">
+              <view
+                wx:for="{{item.options}}"
+                wx:key="value"
+                class="check-item {{item.active ? 'check-item--active' : ''}}"
+                data-section-id="{{item.__sectionId}}"
+                data-field-id="{{item.__fieldId}}"
+                data-option-value="{{item.value}}"
+                bindtap="onToggleOption"
+              >
+                <view class="check-box">{{item.active ? '✓' : ''}}</view>
+                <text class="check-text">{{item.label}}</text>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+
+    </view>
+  </scroll-view>
+
+  <view class="submit-bar">
+    <view class="submit-btn {{isSubmitting ? 'submit-btn--disabled' : ''}}" bindtap="onSubmit">
+      {{isSubmitting ? '跳转中...' : tool.submitText}}
+    </view>
+  </view>
+</view>
