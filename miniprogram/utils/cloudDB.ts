@@ -132,15 +132,58 @@ export interface RagOriginalResult {
   error?: string
 }
 
+const DEFAULT_RAG_RETRIEVAL_TIMEOUT_MS = 30000
+
+export interface SearchPolicyChunksOptions {
+  topK?: number
+  category?: string
+  moduleKey?: string
+  toolId?: string
+  timeoutMs?: number
+}
+
 function unwrapCloudFunctionResult<T>(res: { result?: unknown }): T {
   return res.result as T
 }
 
+function withTimeout<T>(
+  promise: Promise<T>,
+  timeoutMs: number,
+  message: string,
+): Promise<T> {
+  if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
+    return promise
+  }
+
+  let timeoutId: ReturnType<typeof setTimeout> | undefined
+  const timeoutPromise = new Promise<T>((_, reject) => {
+    timeoutId = setTimeout(() => {
+      const error = new Error(message) as Error & { code?: string }
+      error.code = 'RAG_RETRIEVAL_TIMEOUT'
+      reject(error)
+    }, timeoutMs)
+  })
+
+  return Promise.race([promise, timeoutPromise]).then(
+    (value) => {
+      if (timeoutId !== undefined) clearTimeout(timeoutId)
+      return value
+    },
+    (err) => {
+      if (timeoutId !== undefined) clearTimeout(timeoutId)
+      throw err
+    },
+  )
+}
+
 export function searchPolicyChunks(
   query: string,
-  options: { topK?: number; category?: string; moduleKey?: string; toolId?: string } = {},
+  options: SearchPolicyChunksOptions = {},
 ): Promise<RagRetrievalResult> {
-  return wx.cloud
+  const timeoutMs = options.timeoutMs === undefined
+    ? DEFAULT_RAG_RETRIEVAL_TIMEOUT_MS
+    : options.timeoutMs
+  const retrievalPromise = wx.cloud
     .callFunction({
       name: 'ragRetrieval',
       data: {
@@ -152,6 +195,12 @@ export function searchPolicyChunks(
       },
     })
     .then((res) => unwrapCloudFunctionResult<RagRetrievalResult>(res))
+
+  return withTimeout(
+    retrievalPromise,
+    timeoutMs,
+    `rag retrieval timeout after ${timeoutMs}ms`,
+  )
 }
 
 export function getRagAnswer(
