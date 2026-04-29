@@ -51,7 +51,13 @@
 
       <text class="result-count">{{policyCountText}}</text>
 
-      <view wx:if="{{filteredPolicies.length === 0}}" class="proto-empty">
+      <view wx:if="{{isPolicySearching}}" class="proto-empty">
+        <view class="proto-empty__icon">检</view>
+        <text class="proto-empty__title">正在检索政策库</text>
+        <text class="proto-empty__desc">正在匹配相关政策依据</text>
+      </view>
+
+      <view wx:elif="{{filteredPolicies.length === 0}}" class="proto-empty">
         <view class="proto-empty__icon">空</view>
         <text class="proto-empty__title">未找到匹配政策</text>
         <text class="proto-empty__desc">换一个关键词或分类试试看</text>
@@ -87,6 +93,9 @@
       <text class="sheet-date">{{activePolicy.date}}</text>
       <view class="sheet-divider"></view>
       <text class="sheet-summary">{{activePolicy.summary}}</text>
+      <view wx:if="{{activePolicy.docId || activePolicy.sourcePath}}" class="sheet-source-btn" bindtap="onPolicyOriginalTap">
+        查看原文
+      </view>
     </view>
   </view>
 </view>

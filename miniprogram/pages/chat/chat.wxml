@@ -64,6 +64,9 @@
         role="{{item.role}}"
         content="{{item.content}}"
         loading="{{item.loading}}"
+        loading-phase="{{item.loadingPhase}}"
+        references="{{item.references}}"
+        bindsourcetap="onSourceTap"
       />
     </block>
 

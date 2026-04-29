@@ -8,10 +8,28 @@
       <view class="dot dot--1"></view>
       <view class="dot dot--2"></view>
       <view class="dot dot--3"></view>
+      <text wx:if="{{loadingPhase}}" class="loading-phase">{{loadingPhase}}</text>
     </view>
 
     <text wx:elif="{{isUser}}" class="bubble__text" user-select>{{content}}</text>
 
     <rich-text wx:else nodes="{{renderedNodes}}" class="bubble__rich" />
+
+    <view wx:if="{{!isUser && references.length}}" class="source-list">
+      <view
+        wx:for="{{references}}"
+        wx:key="docId"
+        class="source-item"
+        data-index="{{index}}"
+        bindtap="onReferenceTap"
+      >
+        <view class="source-item__head">
+          <text class="source-item__title">{{item.title || item.sourcePath}}</text>
+          <text class="source-item__action">查看原文</text>
+        </view>
+        <text class="source-item__meta">{{item.moduleName || '资料库'}} · {{item.sectionTitle || '原文片段'}}</text>
+        <text wx:if="{{item.sourceExcerpt}}" class="source-item__excerpt">{{item.sourceExcerpt}}</text>
+      </view>
+    </view>
   </view>
 </view>

@@ -1,0 +1,10 @@
+{
+  "name": "raganswer",
+  "version": "1.0.0",
+  "description": "Generate tax policy RAG answers",
+  "main": "index.js",
+  "dependencies": {
+    "@cloudbase/node-sdk": "^3.16.0",
+    "wx-server-sdk": "~2.6.3"
+  }
+}

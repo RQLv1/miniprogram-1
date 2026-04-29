@@ -1,0 +1,29 @@
+<navigation-bar title="原文资料" back="{{true}}" color="black" background="#ffffff" />
+
+<view class="source-page">
+  <view wx:if="{{loading}}" class="state">
+    <text class="state__title">正在加载原文</text>
+    <text class="state__desc">正在从资料库读取 Markdown 原文</text>
+  </view>
+
+  <view wx:elif="{{error}}" class="state">
+    <text class="state__title">原文加载失败</text>
+    <text class="state__desc">{{error}}</text>
+  </view>
+
+  <scroll-view wx:else class="source-scroll" scroll-y>
+    <view class="source-head">
+      <text class="source-title">{{title}}</text>
+      <text class="source-meta">{{moduleName}}</text>
+      <text class="source-path">{{sourcePath}}</text>
+      <text wx:if="{{sectionTitle}}" class="source-section">命中章节：{{sectionTitle}}</text>
+    </view>
+    <view class="source-body">
+      <text class="source-content" user-select>{{content}}</text>
+      <view wx:if="{{hasMoreContent}}" class="source-more">
+        <text class="source-more__progress">{{contentProgress}}</text>
+        <button class="source-more__button" size="mini" bindtap="onLoadMoreContent">加载更多</button>
+      </view>
+    </view>
+  </scroll-view>
+</view>

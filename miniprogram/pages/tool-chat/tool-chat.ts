@@ -1,6 +1,7 @@
 import { PendingChatTask, TOOL_ITEM_MAP, ToolField, ToolItem, ToolPolicy, ToolSection } from '../../utils/constants'
 import { TOOL_INPUT_PROMPT_PREFIX, TOOL_PROMPT_MAP } from '../../utils/promptRegistry'
 import { POLICY_DATA } from '../../data/policies'
+import { searchPolicyChunks } from '../../utils/cloudDB'
 
 type ToggleOption = {
   label: string
@@ -58,6 +59,7 @@ Page({
     filteredPolicies: [] as ToolPolicy[],
     activePolicy: null as ToolPolicy | null,
     policyCountText: '',
+    isPolicySearching: false,
   },
 
   onLoad(query: Record<string, string>) {
@@ -211,7 +213,7 @@ Page({
     this._applyPolicySearch(this.data.policyKeyword.trim(), value)
   },
 
-  _applyPolicySearch(keyword: string, category: string) {
+  _applyLocalPolicySearch(keyword: string, category: string) {
     const normalized = keyword.trim().toLowerCase()
     const list = POLICY_DATA.filter((item) => {
       const matchesCategory = !category || item.category === category
@@ -225,7 +227,57 @@ Page({
       filteredPolicies: list,
       showPolicyResults: true,
       policyCountText: `共找到 ${list.length} 条相关政策`,
+      isPolicySearching: false,
     })
+  },
+
+  _applyPolicySearch(keyword: string, category: string) {
+    const normalized = keyword.trim()
+    if (!normalized && !category) {
+      this._applyLocalPolicySearch('', '')
+      return
+    }
+
+    this.setData({
+      isPolicySearching: true,
+      showPolicyResults: true,
+      policyCountText: '正在检索政策库...',
+    })
+
+    searchPolicyChunks(normalized || category, { category, toolId: 'policy-search', topK: 10 })
+      .then((res) => {
+        if (!res || !res.success) {
+          throw new Error(res && res.error || '政策检索失败')
+        }
+        const filteredPolicies: ToolPolicy[] = (res.matches || []).map((item) => ({
+          id: `${item.docId || item.policyId || item.title}_${item.chunkId}`,
+          title: item.title,
+          docNo: item.sourcePath || item.docNo || '',
+          date: item.sectionTitle || item.date || '',
+          category: item.moduleName || item.category || '资料',
+          tags: [],
+          summary: item.sourceExcerpt || item.content,
+          docId: item.docId,
+          sourcePath: item.sourcePath,
+          sectionTitle: item.sectionTitle,
+          sourceExcerpt: item.sourceExcerpt || item.content,
+          cloudPath: item.cloudPath,
+        }))
+        this.setData({
+          filteredPolicies,
+          showPolicyResults: true,
+          policyCountText: `共找到 ${filteredPolicies.length} 条相关政策`,
+          isPolicySearching: false,
+        })
+      })
+      .catch((err) => {
+        console.error('[tool-chat] rag retrieval failed:', err)
+        wx.showToast({
+          title: '智能检索失败，已切换本地搜索',
+          icon: 'none',
+        })
+        this._applyLocalPolicySearch(normalized, category)
+      })
   },
 
   onPolicyOpen(e: WechatMiniprogram.TouchEvent) {
@@ -236,6 +288,17 @@ Page({
 
   onPolicySheetClose() {
     this.setData({ activePolicy: null })
+  },
+
+  onPolicyOriginalTap() {
+    const policy = this.data.activePolicy
+    if (!policy || (!policy.docId && !policy.sourcePath)) return
+    const params = [
+      policy.docId ? `docId=${encodeURIComponent(policy.docId)}` : '',
+      policy.sourcePath ? `sourcePath=${encodeURIComponent(policy.sourcePath)}` : '',
+      policy.sectionTitle ? `sectionTitle=${encodeURIComponent(policy.sectionTitle)}` : '',
+    ].filter(Boolean).join('&')
+    wx.navigateTo({ url: `/pages/rag-source/rag-source?${params}` })
   },
 
   noop() {},

@@ -4,7 +4,10 @@
   "description": "",
   "scripts": {
     "cloud:list-images": "tcb storage list images/experts --env-id cloud-accounting-d7e5ld7733202af --json",
-    "cloud:upload-images": "tcb storage upload ./source-assets/cloud-images images --times 3 --interval 1000 --env-id cloud-accounting-d7e5ld7733202af"
+    "cloud:upload-images": "tcb storage upload ./source-assets/cloud-images images --times 3 --interval 1000 --env-id cloud-accounting-d7e5ld7733202af",
+    "rag:build": "node scripts/build-policy-rag.js",
+    "rag:patch-doc-map": "node scripts/patch-rag-doc-map.js",
+    "rag:upload": "node scripts/upload-rag-data.js"
   },
   "keywords": [],
   "author": "",

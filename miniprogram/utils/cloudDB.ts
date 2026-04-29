@@ -51,6 +51,140 @@ export type LinkedCompanyInput = Pick<
   'contactName' | 'companyKeyword' | 'identity' | 'identityLabel' | 'isPrimary'
 >
 
+export interface RagPolicyMatch {
+  policyId?: string
+  moduleKey?: string
+  moduleName?: string
+  collection?: string
+  sourcePath?: string
+  fileName?: string
+  docId?: string
+  chunkId: string
+  title: string
+  docNo?: string
+  date?: string
+  category?: string
+  sectionTitle?: string
+  headingPath?: string[]
+  content: string
+  sourceExcerpt?: string
+  cloudPath?: string
+  contentHash?: string
+  originalCharLength?: number
+  score: number
+}
+
+export interface RagReference {
+  title: string
+  docId?: string
+  docNo?: string
+  date?: string
+  category?: string
+  moduleName?: string
+  sourcePath?: string
+  sectionTitle?: string
+  sourceExcerpt?: string
+  cloudPath?: string
+  contentHash?: string
+}
+
+export interface RagRetrievalResult {
+  success: boolean
+  query: string
+  moduleKey?: string
+  moduleName?: string
+  collection?: string
+  answerContext: string
+  matches: RagPolicyMatch[]
+  maxScore?: number
+  error?: string
+}
+
+export interface RagAnswerResult {
+  success: boolean
+  answer: string
+  references: RagReference[]
+  matches: RagPolicyMatch[]
+  moduleName?: string
+  answerMode?: 'rag' | 'fallback'
+  fallbackReason?: 'no_matches' | 'low_confidence'
+  maxScore?: number
+  error?: string
+}
+
+export interface RagOriginalResult {
+  success: boolean
+  document?: {
+    docId: string
+    moduleKey: string
+    moduleName: string
+    sourcePath: string
+    fileName: string
+    title: string
+    contentHash: string
+    charLength: number
+    cloudPath: string
+    fileID?: string
+  }
+  tempFileURL?: string
+  content?: string
+  contentTruncated?: boolean
+  error?: string
+}
+
+function unwrapCloudFunctionResult<T>(res: { result?: unknown }): T {
+  return res.result as T
+}
+
+export function searchPolicyChunks(
+  query: string,
+  options: { topK?: number; category?: string; moduleKey?: string; toolId?: string } = {},
+): Promise<RagRetrievalResult> {
+  return wx.cloud
+    .callFunction({
+      name: 'ragRetrieval',
+      data: {
+        query,
+        topK: options.topK || 5,
+        category: options.category || '',
+        moduleKey: options.moduleKey || '',
+        toolId: options.toolId || '',
+      },
+    })
+    .then((res) => unwrapCloudFunctionResult<RagRetrievalResult>(res))
+}
+
+export function getRagAnswer(
+  query: string,
+  options: { topK?: number; category?: string; moduleKey?: string; toolId?: string } = {},
+): Promise<RagAnswerResult> {
+  return wx.cloud
+    .callFunction({
+      name: 'ragAnswer',
+      data: {
+        query,
+        topK: options.topK || 5,
+        category: options.category || '',
+        moduleKey: options.moduleKey || '',
+        toolId: options.toolId || '',
+      },
+    })
+    .then((res) => unwrapCloudFunctionResult<RagAnswerResult>(res))
+}
+
+export function getRagOriginal(options: { docId?: string; sourcePath?: string; includeContent?: boolean }): Promise<RagOriginalResult> {
+  return wx.cloud
+    .callFunction({
+      name: 'ragOriginal',
+      data: {
+        docId: options.docId || '',
+        sourcePath: options.sourcePath || '',
+        includeContent: options.includeContent === true,
+      },
+    })
+    .then((res) => unwrapCloudFunctionResult<RagOriginalResult>(res))
+}
+
 export function saveSession(
   openid: string,
   title: string,

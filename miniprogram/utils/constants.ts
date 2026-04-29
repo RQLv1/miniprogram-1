@@ -22,7 +22,19 @@ export interface ChatMessage {
   content: string
   timestamp: number
   loading?: boolean
+  loadingPhase?: string
   modelContent?: string
+  references?: ChatReference[]
+}
+
+export interface ChatReference {
+  title: string
+  docId?: string
+  moduleName?: string
+  sourcePath?: string
+  sectionTitle?: string
+  sourceExcerpt?: string
+  cloudPath?: string
 }
 
 export interface PendingChatTask {
@@ -106,6 +118,11 @@ export interface ToolPolicy {
   category: string
   tags: string[]
   summary: string
+  docId?: string
+  sourcePath?: string
+  sectionTitle?: string
+  sourceExcerpt?: string
+  cloudPath?: string
 }
 
 export interface ToolItem {

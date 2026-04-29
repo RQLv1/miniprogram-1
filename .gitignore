@@ -1,0 +1,5 @@
+# Large RAG data files — stored outside git
+source-assets/rag/
+
+# macOS
+.DS_Store

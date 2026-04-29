@@ -35,7 +35,10 @@
         role="{{item.role}}"
         content="{{item.content}}"
         loading="{{item.loading}}"
+        loading-phase="{{item.loadingPhase}}"
+        references="{{item.references}}"
         hideAvatar="{{true}}"
+        bindsourcetap="onSourceTap"
       />
     </view>
     <view id="expert-bottom" class="scroll-anchor"></view>

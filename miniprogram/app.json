@@ -20,6 +20,7 @@
     { "root": "pages/purchased", "pages": ["purchased"] },
     { "root": "pages/privacy", "pages": ["privacy"] },
     { "root": "pages/terms", "pages": ["terms"] },
+    { "root": "pages/rag-source", "pages": ["rag-source"] },
     { "root": "pages/report-detail", "pages": ["report-detail"] },
     { "root": "pages/download-pdf", "pages": ["download-pdf"] },
     { "root": "pages/linked-companies", "pages": ["linked-companies", "add-linked-company"] }

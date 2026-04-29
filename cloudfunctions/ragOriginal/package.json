@@ -1,0 +1,9 @@
+{
+  "name": "ragoriginal",
+  "version": "1.0.0",
+  "description": "Resolve uploaded RAG original markdown documents",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

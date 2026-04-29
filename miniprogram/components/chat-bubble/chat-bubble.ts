@@ -23,6 +23,10 @@ Component({
       type: Boolean,
       value: false,
     },
+    loadingPhase: {
+      type: String,
+      value: '',
+    },
     avatarSrc: {
       type: String,
       value: '',
@@ -30,6 +34,10 @@ Component({
     hideAvatar: {
       type: Boolean,
       value: false,
+    },
+    references: {
+      type: Array,
+      value: [],
     },
   },
 
@@ -47,6 +55,13 @@ Component({
   },
 
   methods: {
+    onReferenceTap(e: WechatMiniprogram.TouchEvent) {
+      const index = Number((e.currentTarget.dataset as { index: number }).index)
+      const reference = (this.properties.references || [])[index]
+      if (!reference) return
+      this.triggerEvent('sourcetap', reference)
+    },
+
     _updateRendered(text: string) {
       if (!text || this.properties.role === 'user') {
         this.setData({ renderedNodes: '' })
