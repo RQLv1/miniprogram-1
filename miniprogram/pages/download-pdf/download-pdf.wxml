@@ -2,7 +2,9 @@
 
 <view class="download-page">
   <view class="search-bar">
-    <view class="search-icon">搜</view>
+    <view class="search-icon">
+      <image class="search-icon-img" src="/assets/icons/search.svg" mode="aspectFit" />
+    </view>
     <input
       class="search-input"
       type="text"
@@ -18,7 +20,9 @@
       <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
 
       <view wx:elif="{{filteredReports.length === 0}}" class="proto-empty">
-        <view class="proto-empty__icon">PDF</view>
+        <view class="proto-empty__icon">
+          <image class="proto-empty__icon-img" src="/assets/icons/pdf.svg" mode="aspectFit" />
+        </view>
         <text class="proto-empty__title">暂无报告</text>
         <text class="proto-empty__desc">完成工具分析后可在这里导出 PDF</text>
       </view>
@@ -30,13 +34,19 @@
         wx:key="id"
         class="file-row proto-card {{item.focused ? 'file-row--focused' : ''}}"
       >
-        <view class="file-icon">PDF</view>
+        <view class="file-icon">
+          <image class="file-icon-img" src="/assets/icons/pdf.svg" mode="aspectFit" />
+        </view>
         <view class="file-copy" bindtap="onReportTap" data-id="{{item.id}}">
           <text class="file-name">{{item.title}}</text>
           <text class="file-meta">{{item.createdText}}</text>
         </view>
         <view class="download-btn {{item.isGenerating ? 'download-btn--disabled' : 'download-btn--active'}}" bindtap="onDownload" data-id="{{item.id}}">
-          {{item.isGenerating ? '生' : (item.hasPdf ? '下' : '导')}}
+          <image
+            class="download-btn-img"
+            src="{{item.isGenerating ? '/assets/icons/file-generate.svg' : (item.hasPdf ? '/assets/icons/download.svg' : '/assets/icons/file-generate.svg')}}"
+            mode="aspectFit"
+          />
         </view>
       </view>
     </view>

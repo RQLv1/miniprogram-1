@@ -2,7 +2,7 @@ import { ChatMessage, ChatReference, PendingChatTask, TOOL_ITEMS, ToolItem, isRe
 import { ensureCurrentOpenid } from '../../utils/auth'
 import { getSessions, saveReport, saveSession, searchPolicyChunks } from '../../utils/cloudDB'
 import { GENERAL_CHAT_PROMPT } from '../../utils/chatPrompt'
-import { ROBOT_AVATAR_URL } from '../../utils/cloudAssets'
+import { ROBOT_AVATAR_URL, resolveRobotAvatarUrl } from '../../utils/cloudAssets'
 import { createShareMessage, enableShareMenu } from '../../utils/share'
 
 const FAQ_LIST = [
@@ -178,9 +178,18 @@ Page({
       sessionId: generateSessionId(),
       overlayTopPadding: getOverlayTopPadding(),
     })
+    resolveRobotAvatarUrl().then((robotAvatar) => {
+      if (robotAvatar && robotAvatar !== this.data.robotAvatar) {
+        this.setData({ robotAvatar })
+      }
+    })
   },
 
   onUnload() {},
+
+  onRobotAvatarError() {
+    this.setData({ robotAvatar: ROBOT_AVATAR_URL })
+  },
 
   onShow() {
     const tabBar = this.getTabBar()

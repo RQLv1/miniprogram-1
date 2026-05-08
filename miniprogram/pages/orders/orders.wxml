@@ -17,7 +17,9 @@
     <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
 
     <view wx:elif="{{filteredOrders.length === 0}}" class="proto-empty">
-      <view class="proto-empty__icon">单</view>
+      <view class="proto-empty__icon">
+        <image class="proto-empty__icon-img" src="/assets/icons/orders.svg" mode="aspectFit" />
+      </view>
       <text class="proto-empty__title">暂无订单记录</text>
       <text class="proto-empty__desc">订单创建后会展示在这里</text>
     </view>
@@ -34,7 +36,9 @@
         <text class="order-status {{item.statusClass}}">{{item.statusText}}</text>
       </view>
       <view class="order-body">
-        <view class="order-icon">{{item.iconLabel}}</view>
+        <view class="order-icon">
+          <image class="order-icon-img" src="/assets/icons/orders.svg" mode="aspectFit" />
+        </view>
         <view class="order-copy">
           <text class="order-title">{{item.title}}</text>
           <text class="order-company">{{item.typeLabel}}</text>

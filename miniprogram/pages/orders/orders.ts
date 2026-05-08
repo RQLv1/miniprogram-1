@@ -21,7 +21,6 @@ interface OrderView {
   statusKey: 'all' | 'pending' | 'progress' | 'done'
   statusText: string
   statusClass: string
-  iconLabel: string
   reportId?: string
   primaryAction: string
   primaryVariant: 'primary' | 'gold'
@@ -106,7 +105,6 @@ Page({
           typeLabel: item.type || '财税分析服务',
           createdText: formatDate(item.createdAt),
           amountText: String(item.amount == null ? 0 : item.amount),
-          iconLabel: '单',
           reportId: item.reportId,
           ...statusView,
         }

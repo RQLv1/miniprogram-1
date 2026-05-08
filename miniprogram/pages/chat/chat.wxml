@@ -32,7 +32,7 @@
 
   <scroll-view class="chat-area" scroll-y scroll-into-view="{{scrollAnchor}}">
     <view wx:if="{{messages.length === 0}}" class="welcome-block">
-      <image class="welcome-avatar" src="{{robotAvatar}}" mode="aspectFill" />
+      <image class="welcome-avatar" src="{{robotAvatar}}" mode="aspectFill" binderror="onRobotAvatarError" />
       <text class="welcome-name">智税 AI 助手</text>
       <text class="welcome-desc">专业财税问答，精准政策解读</text>
 

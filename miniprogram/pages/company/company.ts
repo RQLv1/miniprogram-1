@@ -38,7 +38,14 @@ Page({
 
   onToolTap(e: WechatMiniprogram.TouchEvent) {
     const url = (e.currentTarget.dataset as { url: string }).url
-    wx.navigateTo({ url: `/pages/webview/webview?url=${encodeURIComponent(url)}` })
+    if (!url) {
+      wx.showToast({ title: '功能开发中', icon: 'none' })
+      return
+    }
+    wx.setClipboardData({
+      data: url,
+      success: () => wx.showToast({ title: '链接已复制，请在浏览器打开', icon: 'none', duration: 2500 }),
+    })
   },
 
   onShareAppMessage() {

@@ -22,14 +22,18 @@
     <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
 
     <view wx:elif="{{items.length === 0}}" class="proto-empty">
-      <view class="proto-empty__icon">购</view>
+      <view class="proto-empty__icon">
+        <image class="proto-empty__icon-img" src="/assets/icons/purchased.svg" mode="aspectFit" />
+      </view>
       <text class="proto-empty__title">暂无已购内容</text>
       <text class="proto-empty__desc">支付完成后的报告会显示在这里</text>
     </view>
 
     <view wx:for="{{items}}" wx:key="id" class="purchased-card proto-card">
       <view class="card-main" bindtap="onItemTap" data-id="{{item.reportId || item.id}}">
-        <view class="card-icon">{{item.iconLabel}}</view>
+        <view class="card-icon">
+          <image class="card-icon-img" src="/assets/icons/purchased.svg" mode="aspectFit" />
+        </view>
         <view class="card-copy">
           <text class="card-title">{{item.title}}</text>
           <text class="card-company">{{item.typeLabel}}</text>

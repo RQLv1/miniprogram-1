@@ -10,7 +10,7 @@ interface ExternalTool {
 
 const FEATURED_TOOLS: ExternalTool[] = [
   { name: '腾讯元宝', desc: 'AI 智能助手', icon: '/assets/icons/robot.svg', url: 'https://yuanbao.tencent.com/' },
-  { name: '合同示范文本库', desc: '标准合同模板', icon: '/assets/icons/contract.svg', url: 'https://cont.12315.cn/' },
+  { name: '合同示范文本库', desc: '标准合同模板', icon: '/assets/icons/contract.svg', url: 'https://htsfwb.samr.gov.cn/' },
   { name: '国家税务总局政策法规库', desc: '市场监督管理总局', icon: '/assets/icons/government.svg', url: 'https://www.chinatax.gov.cn/chinatax/n810341/n810755/index.html' },
   { name: '12366纳税平台', desc: '税务咨询热线', icon: '/assets/icons/phone.svg', url: 'https://12366.chinatax.gov.cn/' },
 ]
@@ -47,15 +47,10 @@ Page({
       if (!disabled) wx.showToast({ title: '功能开发中', icon: 'none' })
       return
     }
-    const wxWithOpenUrl = wx as typeof wx & { openUrl?: (options: { url: string }) => void }
-    if (wxWithOpenUrl.openUrl) {
-      wxWithOpenUrl.openUrl({ url })
-    } else {
-      wx.setClipboardData({
-        data: url,
-        success: () => wx.showToast({ title: '链接已复制，请在浏览器打开', icon: 'none', duration: 2500 }),
-      })
-    }
+    wx.setClipboardData({
+      data: url,
+      success: () => wx.showToast({ title: '链接已复制，请在浏览器打开', icon: 'none', duration: 2500 }),
+    })
   },
 
   onShareAppMessage() {

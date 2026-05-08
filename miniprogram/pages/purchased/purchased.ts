@@ -29,7 +29,6 @@ Page({
       typeLabel: string
       createdText: string
       amountText: string
-      iconLabel: string
     }>,
     stats: {
       count: 0,
@@ -60,7 +59,6 @@ Page({
         typeLabel: item.type || '财税分析服务',
         createdText: formatDate(item.createdAt),
         amountText: String(item.amount == null ? 0 : item.amount),
-        iconLabel: '报',
       }))
       const totalAmount = docs.reduce((sum, item) => sum + (item.amount || 0), 0)
       const typeCount = new Set(docs.map((item) => item.type || '财税分析服务')).size

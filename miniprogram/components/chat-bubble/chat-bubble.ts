@@ -1,7 +1,7 @@
 // components/chat-bubble/chat-bubble.ts
 
 import { markdownToHtml } from '../../utils/markdown'
-import { ROBOT_AVATAR_URL } from '../../utils/cloudAssets'
+import { ROBOT_AVATAR_URL, resolveRobotAvatarUrl } from '../../utils/cloudAssets'
 
 Component({
   properties: {
@@ -51,10 +51,15 @@ Component({
     attached() {
       this.setData({ isUser: this.properties.role === 'user' })
       this._updateRendered(this.properties.content)
+      this._resolveDefaultAvatar()
     },
   },
 
   methods: {
+    onAvatarError() {
+      this.setData({ defaultAvatarSrc: ROBOT_AVATAR_URL })
+    },
+
     onReferenceTap(e: WechatMiniprogram.TouchEvent) {
       const index = Number((e.currentTarget.dataset as { index: number }).index)
       const reference = (this.properties.references || [])[index]
@@ -68,6 +73,14 @@ Component({
         return
       }
       this.setData({ renderedNodes: markdownToHtml(text) })
+    },
+
+    _resolveDefaultAvatar() {
+      resolveRobotAvatarUrl().then((url) => {
+        if (url && url !== this.data.defaultAvatarSrc) {
+          this.setData({ defaultAvatarSrc: url })
+        }
+      })
     },
   },
 })

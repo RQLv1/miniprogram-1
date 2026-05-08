@@ -1,6 +1,6 @@
 <view class="bubble-wrap {{isUser ? 'bubble-wrap--user' : 'bubble-wrap--bot'}}">
   <view wx:if="{{!isUser && !hideAvatar}}" class="avatar avatar--bot">
-    <image class="avatar__img" src="{{avatarSrc || defaultAvatarSrc}}" mode="aspectFill" />
+    <image class="avatar__img" src="{{avatarSrc || defaultAvatarSrc}}" mode="aspectFill" binderror="onAvatarError" />
   </view>
 
   <view class="bubble {{isUser ? 'bubble--user' : 'bubble--bot'}} {{hideAvatar ? 'bubble--compact' : ''}}">
